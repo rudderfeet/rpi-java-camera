@@ -23,14 +23,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<dockerfile-maven-version>1.4.0</dockerfile-maven-version>
 	</properties>
 
 	<dependencies>
+
+		<!-- Basic Spring Boot libraries -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -42,22 +44,58 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Pi4j is an excellent Java library for accessing Raspberry Pi hardware 
+			functions -->
 		<dependency>
 			<groupId>com.pi4j</groupId>
 			<artifactId>pi4j-core</artifactId>
 			<version>1.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.hopding</groupId>
+			<artifactId>jrpicam</artifactId>
+			<version>1.1.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/jrpicam-1.1.1.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
-	</build>
 
+			<!-- Maven Docker support; see https://github.com/spotify/dockerfile-maven -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>${dockerfile-maven-version}</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>${project.artifactId}</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
 
 </project>
