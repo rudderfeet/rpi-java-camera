@@ -31,8 +31,8 @@ public class RpiJavaCameraApplication {
 			}
 
 			// Create a Camera that saves images to the Pi's Pictures directory.
-			System.out.println("Let's take a picture and store it in /home/pi/Pictures...");
-			RPiCamera piCamera = new RPiCamera("/home/pi/Pictures");
+			System.out.println("Let's take a picture and store it in /tmp...");
+			RPiCamera piCamera = new RPiCamera("/tmp");
 			piCamera.setWidth(500).setHeight(500) // Set Camera to produce 500x500 images.
 		    .setBrightness(75)                // Adjust Camera's brightness setting.
 		    .setExposure(Exposure.AUTO)       // Set Camera's exposure.
