@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import com.hopding.jrpicam.RPiCamera;
-import com.hopding.jrpicam.enums.Exposure;
 
 @SpringBootApplication
 public class RpiJavaCameraApplication {
